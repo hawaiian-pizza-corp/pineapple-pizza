@@ -1,3 +1,3 @@
-# pineapple-pizza
+# pineapple-pizza 🍕🍍🥓
 
 🚧 This is a work in progress... 😂
