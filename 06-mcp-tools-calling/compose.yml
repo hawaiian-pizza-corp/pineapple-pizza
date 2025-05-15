@@ -1,0 +1,28 @@
+# docker compose up --build --no-log-prefix
+services:
+  use-mcp-toolkit-4-tools:
+    build: .
+    environment:
+      - MODEL_RUNNER_BASE_URL=${MODEL_RUNNER_BASE_URL}
+      - MODEL_RUNNER_LLM_CHAT=${MODEL_RUNNER_LLM_CHAT}
+      - MODEL_RUNNER_LLM_TOOLS=${MODEL_RUNNER_LLM_TOOLS}
+    #depends_on:
+    #  download-chat-llm:
+    #    condition: service_completed_successfully
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # to use docker from docker
+
+  # Download local LLMs
+
+  download-chat-llm:
+    provider:
+      type: model
+      options:
+        model: ${MODEL_RUNNER_LLM_CHAT}
+
+
+  download-tools-llm:
+    provider:
+      type: model
+      options:
+        model: ${MODEL_RUNNER_LLM_TOOLS}

@@ -1,0 +1,70 @@
+# docker compose --file compose.linux.yml up --build --no-log-prefix
+services:
+  chat-completion:
+    build: .
+    environment:
+      - MODEL_RUNNER_BASE_URL=${MODEL_RUNNER_BASE_URL}
+      - MODEL_RUNNER_LLM_CHAT=${MODEL_RUNNER_LLM_CHAT}
+      - MODEL_RUNNER_LLM_EMBEDDINGS=${MODEL_RUNNER_LLM_EMBEDDINGS}
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER}/${CURRENT_DIR}/docs:/docs
+      #- ./docs:/docs
+
+    depends_on:
+      download-chat-llm:
+        condition: service_completed_successfully
+      download-embeddings-llm:
+        condition: service_completed_successfully
+  # Download local LLMs
+
+  download-chat-llm:
+    image: curlimages/curl:8.12.1
+    #environment:
+      #- MODEL_RUNNER_BASE_URL=${MODEL_RUNNER_BASE_URL}
+      #- MODEL_RUNNER_LLM_CHAT=${MODEL_RUNNER_LLM_CHAT}
+    entrypoint: |
+      sh -c '
+      # Download Chat model
+      curl -s "${MODEL_RUNNER_BASE_URL}/models/create" -d @- << EOF
+      {"from": "${MODEL_RUNNER_LLM_CHAT}"}
+      EOF
+      '
+
+  download-embeddings-llm:
+    image: curlimages/curl:8.12.1
+    #environment:
+      #- MODEL_RUNNER_BASE_URL=${MODEL_RUNNER_BASE_URL}
+      #- MODEL_RUNNER_LLM_CHAT=${MODEL_RUNNER_LLM_CHAT}
+    entrypoint: |
+      sh -c '
+      # Download Chat model
+      curl -s "${MODEL_RUNNER_BASE_URL}/models/create" -d @- << EOF
+      {"from": "${MODEL_RUNNER_LLM_EMBEDDINGS}"}
+      EOF
+      '
+
+
+  redis-server:
+    image: redis:8.0.0-alpine3.21
+    environment: 
+      - REDIS_ARGS=--save 30 1
+      # snapshot
+    ports:
+      - 6379:6379
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER}/${CURRENT_DIR}/data:/data
+
+  stop-redis:
+    image: docker:cli
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      - /bin/sh
+      - -c
+      - |  
+        # Stopping Redis...
+        docker stop 02-rag-redis-server-1
+      
+    depends_on:
+      chat-completion:
+        condition: service_completed_successfully

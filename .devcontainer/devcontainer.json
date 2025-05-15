@@ -1,0 +1,43 @@
+{
+	"name": "🍍🥓 Hawaiian Pizza",
+
+	"dockerComposeFile": "compose.yml",
+	"service": "hawaiian-pizza-workspace",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {
+			"version": "latest"
+		}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"vallyscode.crayons",
+				"ms-azuretools.vscode-docker",
+				"golang.go",
+				"Tobermory.es6-string-html",
+				"tamasfe.even-better-toml",
+				"hediet.vscode-drawio",
+				"aaron-bond.better-comments",
+				"PKief.material-icon-theme",
+				"PKief.material-product-icons",
+				"wayou.vscode-todo-highlight"
+			]
+		}
+	},
+    "remoteEnv": {
+		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
+		"COMPOSE_BAKE": true
+    },
+	"forwardPorts": [3000, 4000, 8080, 9090, 7070, 6443],
+   	"mounts": [
+        "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/${localEnv:USER}/.ssh,type=bind,consistency=cached"
+    ],
+	"remoteUser": "${localEnv:USER}",
+	// Run commands after the container is created.
+	//"postCreateCommand": "sudo chmod 666 /var/run/docker.sock"
+	"postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}; sudo chmod 666 /var/run/docker.sock"
+
+}

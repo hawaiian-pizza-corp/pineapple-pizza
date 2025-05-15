@@ -1,0 +1,26 @@
+# docker compose --file compose.linux.yml up --build --no-log-prefix
+services:
+  chat-completion:
+    build: .
+    environment:
+      - MODEL_RUNNER_BASE_URL=${MODEL_RUNNER_BASE_URL}
+      - MODEL_RUNNER_LLM_CHAT=${MODEL_RUNNER_LLM_CHAT}
+
+    depends_on:
+      download-chat-llm:
+        condition: service_completed_successfully
+
+  # Download local LLMs
+
+  download-chat-llm:
+    image: curlimages/curl:8.12.1
+    #environment:
+      #- MODEL_RUNNER_BASE_URL=${MODEL_RUNNER_BASE_URL}
+      #- MODEL_RUNNER_LLM_CHAT=${MODEL_RUNNER_LLM_CHAT}
+    entrypoint: |
+      sh -c '
+      # Download Chat model
+      curl -s "${MODEL_RUNNER_BASE_URL}/models/create" -d @- << EOF
+      {"from": "${MODEL_RUNNER_LLM_CHAT}"}
+      EOF
+      '
