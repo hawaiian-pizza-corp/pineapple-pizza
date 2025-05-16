@@ -54,7 +54,7 @@ func main() {
 	messages := []openai.ChatCompletionMessageParamUnion{
 		openai.SystemMessage(systemInstructions),
 		openai.SystemMessage(knowledgeBase),
-		openai.UserMessage("What is the best pizza in the world?"),
+		openai.UserMessage("What is your name?"),
 	}
 	// openai.UserMessage("What are the ingredients of the hawaiian pizza?"),
 	// openai.UserMessage("What is the best pizza in the world?"),

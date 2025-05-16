@@ -101,7 +101,8 @@ func main() {
 		fmt.Println(JSONPretty(toolCall))
 	}
 
-	os.Exit(0)
+	
+	//os.Exit(0)
 	// make the function calls
 	// and display the results
 	for _, toolCall := range toolCalls {

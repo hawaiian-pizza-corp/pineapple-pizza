@@ -2,14 +2,14 @@
     "workbench.iconTheme": "material-icon-theme",
     "workbench.colorTheme": "Idea intellij light theme",
     "editor.fontSize": 15,
-    "terminal.integrated.fontSize": 15,
+    "terminal.integrated.fontSize": 18,
     "editor.insertSpaces": true,
     "editor.tabSize": 4,
     "editor.detectIndentation": true,
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 1000,
     "workbench.tree.indent": 20,
-    "window.zoomLevel": 0.0,
+    "window.zoomLevel": 1.0,
     "[markdown]": {
         "editor.unicodeHighlight.ambiguousCharacters": false,
         "editor.unicodeHighlight.invisibleCharacters": false,
@@ -29,19 +29,19 @@
         //"*.md": "vscode.markdown.preview.editor"
     },
     "[dockerfile]": {
-        "editor.fontSize": 16,
+        "editor.fontSize": 18,
     },
     "[dockercompose]": {
-        "editor.fontSize": 16,
+        "editor.fontSize": 18,
     },
     "[json]": {
         "editor.fontSize": 16,
     },
     "[yaml]": {
-        "editor.fontSize": 16,
+        "editor.fontSize": 18,
 
     },
     "[go]": {
-        "editor.fontSize": 15,
+        "editor.fontSize": 18,
     }
 }

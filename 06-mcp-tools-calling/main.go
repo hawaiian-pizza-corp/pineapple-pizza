@@ -26,7 +26,7 @@ func main() {
 		Give me some pizzeria addresses in Lyon, France.
 		Using the result, 
 		- give me the name and adresses of the top 3 pizzerias in Lyon,
-		- and imagine a quick presentation sentence for each pizzeria.
+		- and imagine a quick presentation sentence for each pizzeria (with fancy emojis).
 	`
 
 	// Docker Model Runner Chat base URL
@@ -163,7 +163,6 @@ func main() {
 	//! using the result with a chat completion
 	messages := []openai.ChatCompletionMessageParamUnion{
 		openai.SystemMessage("You are a pizza expert."),
-		//openai.SystemMessage(addressesKnowledgeBase),
 		openai.AssistantMessage(addressesKnowledgeBase),
 		openai.UserMessage(userQuestion), //! <-- use the same prompt
 	}

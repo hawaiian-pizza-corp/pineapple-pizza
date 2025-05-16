@@ -83,8 +83,8 @@ func main() {
 	// User question about 🍍🥓 Hawaiian pizza
 	// -------------------------------------------------
 
-	//userQuestion := "Is Hawaiian pizza really from Hawaii?"
-	userQuestion := "Give me regional variations of Hawaiian pizza?"
+	userQuestion := "Is Hawaiian pizza really from Hawaii?"
+	//userQuestion := "Give me regional variations of Hawaiian pizza?"
 
 	systemInstructions := `
 	You are a Hawaiian pizza expert. Your name is Bob.
