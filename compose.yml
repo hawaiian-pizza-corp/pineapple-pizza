@@ -1,0 +1,39 @@
+# docker compose up 
+services:
+
+  llama32:
+    provider:
+      type: model
+      options:
+        model: ai/llama3.2:latest
+
+  qwen25:
+    provider:
+      type: model
+      options:
+        model: ai/qwen2.5:latest
+
+  qwen253b:
+    provider:
+      type: model
+      options:
+        model: ai/qwen2.5:3B-F16
+
+  qwen2515b:
+    provider:
+      type: model
+      options:
+        model: ai/qwen2.5:1.5B-F16
+
+  qwen2550b:
+    provider:
+      type: model
+      options:
+        model: ai/qwen2.5:0.5B-F16
+
+  mxbai:
+    provider:
+      type: model
+      options:
+        model: ai/mxbai-embed-large
+   

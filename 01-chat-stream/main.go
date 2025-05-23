@@ -51,13 +51,15 @@ func main() {
 	- Sweden: "Flying Jacob" pizza includes banana, pineapple, curry powder, and chicken
 	`
 
+	userQuestion := "What is your name?"
+	//userQuestion := "What is the best pizza in the world?"
+	// userQuestion := "What are the ingredients of the hawaiian pizza?"
+
 	messages := []openai.ChatCompletionMessageParamUnion{
 		openai.SystemMessage(systemInstructions),
 		openai.SystemMessage(knowledgeBase),
-		openai.UserMessage("What is your name?"),
+		openai.UserMessage(userQuestion),
 	}
-	// openai.UserMessage("What are the ingredients of the hawaiian pizza?"),
-	// openai.UserMessage("What is the best pizza in the world?"),
 
 	param := openai.ChatCompletionNewParams{
 		Messages:    messages,

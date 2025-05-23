@@ -17,7 +17,6 @@ import (
 	"github.com/openai/openai-go/option"
 )
 
-
 func main() {
 	ctx := context.Background()
 
@@ -76,8 +75,32 @@ func main() {
 		log.Fatalf("😡 Failed to list tools: %v", err)
 	}
 
+	filteredTools := []mcp_golang.ToolRetType{}
+	for _, tool := range mcpTools.Tools {
+
+		// If you want to use only the Brave API
+		// You need a key (free for brave_web_search)
+		// https://api-dashboard.search.brave.com/app/keys
+		if tool.Name == "brave_web_search" {
+			filteredTools = append(filteredTools, tool)
+		}
+
+		// If you want to use only the DuckDuckGo API
+		/* 		if tool.Name == "search" {
+		   			filteredTools = append(filteredTools, tool)
+		   		}
+		*/
+		// If you want to use only the google API
+		// You need a key (free)
+		/*
+			if tool.Name == "maps_search_places" {
+				filteredTools = append(filteredTools, tool)
+			}
+		*/
+	}
+
 	//? Convert the mcp tools to OpenAI tools
-	tools := ConvertToOpenAITools(mcpTools)
+	tools := ConvertToOpenAITools(filteredTools)
 
 	//! Display the tools that are available on the MCP server
 	fmt.Println("🛠️  Available Tools (OpenAI format) on the MCP server:")
@@ -97,14 +120,14 @@ func main() {
 		ParallelToolCalls: openai.Bool(true),
 		Tools:             tools,
 		Seed:              openai.Int(0),
-		Model:       modelTools,
-		Temperature: openai.Opt(0.0),
+		Model:             modelTools,
+		Temperature:       openai.Opt(0.0),
 	}
 
-	//? in "tools mode", the LLM will use only the parts of the prompt, related to an existing tool 
+	//? in "tools mode", the LLM will use only the parts of the prompt, related to an existing tool
 	/*
 		Give me some pizzeria addresses in Lyon, France.
-		Using the result, 
+		Using the result,
 		- give me the name and adresses of the top 3 pizzerias in Lyon,
 		- and imagine a quick presentation sentence for each pizzeria.
 	*/
@@ -132,7 +155,6 @@ func main() {
 	}
 
 	//os.Exit(0)
-
 
 	//! call the tools to create a list of pizzerias addresses
 	addressesKnowledgeBase := "PIZZERIAS ADRESSES:\n"
@@ -226,10 +248,10 @@ func JSONPretty(toolCall openai.ChatCompletionMessageToolCall) string {
 	return prettyJSONString
 }
 
-func ConvertToOpenAITools(tools *mcp_golang.ToolsResponse) []openai.ChatCompletionToolParam {
-	openAITools := make([]openai.ChatCompletionToolParam, len(tools.Tools))
+func ConvertToOpenAITools(tools []mcp_golang.ToolRetType) []openai.ChatCompletionToolParam {
+	openAITools := make([]openai.ChatCompletionToolParam, len(tools))
 
-	for i, tool := range tools.Tools {
+	for i, tool := range tools {
 		schema := tool.InputSchema.(map[string]any)
 		openAITools[i] = openai.ChatCompletionToolParam{
 			Function: openai.FunctionDefinitionParam{
