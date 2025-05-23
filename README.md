@@ -18,8 +18,17 @@ docker compose up
 
 ### Do a dry run of the demos to get everything in the cache
 
+### 🔴 Check if you will use a MCP Server that needs an API Key or is rate limited
 
-### Claude AI
+### Claude AI Desktop
+
+https://claude.ai/download
+
+### 👋 If you don't want to use Claude.AI Desktop
+
+You can use the **Inspector** project: https://github.com/modelcontextprotocol/inspector
+
+> I explain later in this document how to use it
 
 
 ### Devcontainer
@@ -313,6 +322,23 @@ and add 5 friends (choose the names)
 display all the records of the friends table in markdown format
 ```
 
+### Same demo with Inspector
+
+Start **Inspector**
+```bash
+npx @modelcontextprotocol/inspector
+```
+
+With your browser, go to [http://127.0.0.1:6274](http://127.0.0.1:6274)
+
+- Choose **STDIO** transport type
+- In the **Command** field: `docker`
+- In the **Arguments** field: `run -i --rm mcp/sqlite`
+- Click on **Connect**
+- Go to the **Tools** panel
+- Click on the **List Tools** button
+- Use the tools 🎉
+
 
 ## 05 - MCP 2nd Contact with Claude AI + **Docker MCP Toolkit**
 
@@ -357,6 +383,24 @@ Then try this:
 ```text
 Search for pizzerias in lyon (3 results)
 ```
+
+### Same demo with Inspector
+
+Start **Inspector**
+```bash
+npx @modelcontextprotocol/inspector
+```
+
+With your browser, go to [http://127.0.0.1:6274](http://127.0.0.1:6274)
+
+- Choose **STDIO** transport type
+- In the **Command** field: `docker`
+- In the **Arguments** field: `run -i --rm alpine/socat STDIO TCP:host.docker.internal:8811`
+- Click on **Connect**
+- Go to the **Tools** panel
+- Click on the **List Tools** button
+- Use the tools 🎉
+
 
 ## 06 - MCP + Golang + OpenAI SDK + **Docker MCP Toolkit**
 
